@@ -22,7 +22,7 @@ app.get('/about', (req, res) => {
   res.render('about')
 })
 
-// Redirects to first project if no project number is there
+// Redirects to first project if none other listed
 app.get('/project', (req, res) => {
   res.redirect('/project/1')
 })
@@ -30,7 +30,7 @@ app.get('/project', (req, res) => {
 /**
  * Obtains user request and verifies if it is a valid project number.
  * If valid, renders appropriate page.
- * Creates 404 error if invalid.
+ * Creates 404 error if not
  */
 app.get('/project/:id', (req, res, next) => {
   const project = projects[req.params.id - 1]
