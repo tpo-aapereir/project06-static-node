@@ -38,7 +38,7 @@ app.get('/project/:id', (req, res, next) => {
   } else {
     const err = new Error()
     err.status = 404
-    err.message = 'I am sorry Master Kenobi, but it appears the web page you are looking for, does not exist!'
+    err.message = 'It seems we have encountered an error. This Page does not yet exist.'
     console.error('Project page does not exist')
     next(err)
   }
@@ -53,7 +53,7 @@ app.get('/*', (req, res, next) => {
   if (invalidPath === undefined) {
     const err = new Error()
     err.status = 404
-    err.message = 'Woops! It seems the page you are looking for does not exist.'
+    err.message = 'I am sorry Master Kenobi, but it appears the web page you are looking for, does not exist!'
     console.error('Page does not exist')
     next(err)
   } else {
@@ -70,8 +70,8 @@ app.use((err, req, res, next) => {
     res.render('page-not-found', { err })
   } else {
     err.status = 500
-    err.message = 'Woah! Seems like the server had a bug. We will get an exterminator on that!'
-    console.error('Server error - are there bugs in the code that need squishing?')
+    err.message = 'It seems the server encountered an error. How unfortunate!'
+    console.error('Server error - check code to verify the nature.')
     res.render('error', { err })
   }
 })
