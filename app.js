@@ -63,8 +63,8 @@ app.get('/*', (req, res, next) => {
 })
 
 /**
- * Interprets error.  If 404, displays page not found.
- * If an error exists but is NOT a 404, sets it to 500 and displays error page.
+ * Interprets error.  If 404, displays as such, if not, sets error to 500 
+ * and displays the message attached
  */
 app.use((err, req, res, next) => {
   if (err.status === 404) {
