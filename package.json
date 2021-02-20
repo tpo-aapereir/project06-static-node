@@ -9,15 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/tpo-aapereir/project06-static-node.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": ""
-  },
-  "homepage": "",
+
+  "homepage": "https://github.com/tpo-aapereir/project06-static-node/blob/master/README.md",
   "dependencies": {
     "express": "^4.17.1",
     "pug": "^3.0.0"
