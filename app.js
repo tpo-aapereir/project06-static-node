@@ -3,7 +3,7 @@
  */
 const express = require('express')
 const app = express()
-const { projects } = require('./data.json')
+const projectInfo = require('./data.json')
 
 /**
  * Set the view engine to PUG
@@ -15,7 +15,7 @@ app.use('/static', express.static('public'))
  * Route handling and error handling
  */
 app.get('/', (req, res) => {
-  res.render('index', { projects })
+  res.render('index', projectInfo)
 })
 
 app.get('/about', (req, res) => {
@@ -32,17 +32,20 @@ app.get('/project', (req, res) => {
  * If valid, renders appropriate page.
  * Creates 404 error if not
  */
-app.get('/project/:id', (req, res, next) => {
-  const project = projects[req.params.id - 1]
-  if (project !== undefined) {
-    res.render('project', { projects })
-  } else {
-    const err = new Error()
-    err.status = 404
-    err.message = 'It seems we have encountered an error. This Page does not yet exist.'
-    console.error('Project page does not exist')
-    next(err)
-  }
+app.get('/project/:id', (req, res) => {
+  const projectIndex = parseInt(req.params.id) - 1
+  res.render('project', projectInfo.projects[projectIndex], (err, html) => {
+    if (err) {
+      res.render('error', {
+        err: {
+          message: 'Danger, Danger Will Robinson! Errors abound!',
+          status: 500
+        }
+      })
+    } else {
+      res.send(html)
+    }
+  })
 })
 
 /**
@@ -66,16 +69,6 @@ app.get('/*', (req, res, next) => {
  * Interprets error.  If 404, displays as such, if not, sets error to 500 
  * and displays the message attached
  */
-app.use((err, req, res, next) => {
-  if (err.status === 404) {
-    res.render('page-not-found', { err })
-  } else {
-    err.status = 500
-    err.message = 'It seems the server encountered an error. How unfortunate!'
-    console.error('Server error - check code to verify the nature.')
-    res.render('error', { err })
-  }
-})
 
 /**
  * Starting the server:
